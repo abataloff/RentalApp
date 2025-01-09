@@ -28,4 +28,12 @@ class Assert {
       message
     );
   }
+
+  static isNull(value, message = "") {
+    this._throwError(
+      value !== null,
+      `Assertion failed: expected null, but got ${value}`,
+      message
+    );
+  }
 }

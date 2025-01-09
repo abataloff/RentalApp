@@ -32,6 +32,9 @@ class MeterService {
    * @param {Place} place
    */
   getLastMeter(place) {
+    if (this.meterSheet.getLastRow()<=1)
+      return null
+
     var lastDate = null;
     var lastValue = null;
 
@@ -69,7 +72,7 @@ class MeterService {
 
       if (place) {
         if (this.addMeterReading(place, date, value)) {
-          this.incomingMeterSheet.deleteRow();
+          this.incomingMeterSheet.deleteRow(i);
           i--;
         }
       } else {
