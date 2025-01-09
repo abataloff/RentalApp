@@ -93,34 +93,9 @@ function testMeterService() {
   Assert.equal(appendedRows[2][2], 300);
   Assert.equal(deletedRows.length, 2);
 
-  getLastMeterWithEmptyMeterData();
+  testGetLastMeterWithEmptyMeterData();
   testProcessIncomingMeterDataWithNonExistentPlace();
   Logger.log("All tests completed!");
-}
-
-function getLastMeterWithEmptyMeterData() {
-  const mockAppWithEmptyMeterData = {
-    sheet: {
-      getSheetByName: function (name) {
-        return {
-          getLastRow: () => 1,
-          getRange: (row, col, numRows, numCols) => {
-            if (row < 0 || col < 0 || numRows <= 0 || numCols <= 0 ) {
-              throw new Error("Invalid range parameters: Rows and columns must be greater than 0, and row/col indices must be positive.");
-            }
-            return { getValues: () => [] };
-          }
-        };
-      }
-    }
-  };
-
-  const service = new MeterService(mockAppWithEmptyMeterData);
-  Logger.log("Testing getLastMeter with empty meterData...");
-  const place = new Place("Room1", "Address1", "Room1");
-  const lastMeter = service.getLastMeter(place);
-  Logger.log("Last meter: " + JSON.stringify(lastMeter));
-  Assert.isNull(lastMeter); // Ожидаем, что вернется null, так как данных нет
 }
 
 function testProcessIncomingMeterDataWithNonExistentPlace() {
@@ -200,7 +175,7 @@ function testProcessIncomingMeterDataWithNonExistentPlace() {
   Assert.equal(deletedRows.length, 1);
 }
 
-function getLastMeterWithEmptyMeterData() {
+function testGetLastMeterWithEmptyMeterData() {
   const mockAppWithEmptyMeterData = {
     sheet: {
       getSheetByName: function (name) {
