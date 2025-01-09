@@ -32,8 +32,13 @@ class MeterService {
    * @param {Place} place
    */
   getLastMeter(place) {
-    if (this.meterSheet.getLastRow()<=1)
-      return null
+    if (!place) {
+      throw new Error("Place cannot be null");
+    }
+
+    if (this.meterSheet.getLastRow() <= 1) {
+      return null;
+    }
 
     var lastDate = null;
     var lastValue = null;
